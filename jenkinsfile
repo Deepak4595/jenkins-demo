@@ -2,16 +2,21 @@ pipeline {
     agent any
 
     stages {
-        stage('DEBUG: Show workspace') {
+        stage('Build') {
             steps {
-                sh '''
-                echo "===== CURRENT DIRECTORY ====="
-                pwd
-                echo "===== LIST FILES ====="
-                ls -l
-                echo "===== FIND pom.xml ====="
-                find . -name pom.xml
-                '''
+                dir('jenkins-maven-demo') {
+                    sh 'mvn clean compile'
+                }
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                dir('jenkins-maven-demo') {
+                    withSonarQubeEnv('SonarQube') {
+                        sh 'mvn sonar:sonar'
+                    }
+                }
             }
         }
     }
