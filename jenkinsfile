@@ -4,21 +4,15 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building application'
-                sh 'ls -l'
+                sh 'mvn clean compile'
             }
         }
 
-        stage('Test') {
+        stage('SonarQube Analysis') {
             steps {
-                echo 'Running tests'
-                sh 'echo Tests passed'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Deploying application'
+                withSonarQubeEnv('SonarQube') {
+                    sh 'mvn sonar:sonar'
+                }
             }
         }
     }
