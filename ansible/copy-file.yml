@@ -1,0 +1,10 @@
+---
+- name: Copy file using Ansible
+  hosts: local
+  become: false
+
+  tasks:
+    - name: Copy hello.txt to /tmp directory
+      copy:
+        src: hello.txt
+        dest: /tmp/hello.txt

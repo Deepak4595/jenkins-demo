@@ -1,0 +1,10 @@
+---
+- name: Deploy using Ansible triggered by Jenkins
+  hosts: local
+  become: false
+
+  tasks:
+    - name: Create deployment message file
+      copy:
+        content: "Deployed by Jenkins using Ansible"
+        dest: /tmp/jenkins-ansible.txt
