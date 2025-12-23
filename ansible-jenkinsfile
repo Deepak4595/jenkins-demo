@@ -1,0 +1,14 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Run Ansible Playbook') {
+            steps {
+                sh '''
+                cd ~/ansible
+                ansible-playbook -i inventory deploy-from-jenkins.yml
+                '''
+            }
+        }
+    }
+}
